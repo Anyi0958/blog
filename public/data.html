@@ -1,0 +1,393 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>资料修改</title>
+</head>
+
+<style type="text/css">
+	body{margin: 0;padding: 0;min-width:1400px;}
+	body:before{
+		content: '';
+		display: table;
+	}
+	img{margin: 0;padding: 0;}
+	a{text-decoration: none;}
+	button{cursor: pointer;}
+	#bg img{
+	    position: fixed;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    opacity: 0.6;
+	    z-index: -100;
+	}
+	#d1,#d2,#d3,#d4{
+		width: 21%;
+		margin:0 1.5%;
+		text-align: center;
+		/*border: 1px solid yellow;	*/
+		float: left;
+	}
+	#d2 p,#d3 p{
+		width: 100%;
+		height: 30px;
+		overflow: hidden;
+	}
+	#d2 input{
+		height: 18px;
+		font-weight: bolder;
+		font-size: 16px;
+	}
+	#d4 img{width: 100%;}
+	#bga{
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		opacity: 0.5;
+		z-index: -1;
+	}
+	        #con{
+            width: 500px;
+            margin: 0 auto;
+            margin-top: 100px;
+            border-radius:10px;
+            padding: 40px;
+            text-align: center;
+            letter-spacing: 0.3rem;
+            background: rgba(222,222,222,0.7);
+        }
+        #con p{margin-bottom: 30px;}
+</style>
+
+<body onload="load1()">
+	<div id="bga"></div>
+	<br/>
+	<h2 style="text-align: center;letter-spacing: 0.3rem;">博客信息</h2>
+	<hr/>
+	<p align="center" id="p1">
+<!-- 		<br> -->
+<!-- 		&nbsp;用户名称：<input type="text" name="uname" id="uname"><br><br> -->
+<!-- 		用户密码：<input type="password" name="upwd" id="upwd"><br><br><br> -->
+<!-- 		<input type="button" onclick="datalogin()" value="登录"> -->
+        <br/>
+        账&nbsp;号：<input type="text" name="uname" id="uname"><br><br> 
+        密&nbsp;码：<input type="password" name="upwd" id="upwd"><br><br><br>
+        <button class="btn btn-success" onclick="datalogin()">登录</button>
+	</p>
+	<br>
+	<!-- 基本资料 -->
+	<div id="d1"></div>
+	<!-- 时光轴 -->
+	<div id="d2"></div>
+	<!-- 文章 -->
+	<div id="d3"></div>
+	<!-- 相册 -->
+	<div id="d4">
+	</div>
+</body>
+
+<script type="text/javascript">
+	function load1(){
+		if(location.search!=''){load()}
+	}	
+</script>
+
+<!-- 登录 -->
+<script type="text/javascript">
+	function load(){
+		var uid = location.search.slice(5)
+		p1.innerHTML = `<input type="hidden" id="uid" value="${uid}">`
+		user_show();
+		times_show();
+		article_show();
+		photo_show();
+	}
+</script>
+
+ <!--老版登录 -->
+<script type="text/javascript">
+	function datalogin(){
+		if(!uname.value){
+			alert('用户名称不能为空！')
+			return
+		}
+		if(!upwd.value){
+			alert('密码不能为空！')
+			return
+		}
+
+		var xhr =new XMLHttpRequest()
+		xhr.open('post','/data/login',true)
+		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+		var data1 = 'uname='+uname.value+'&upwd='+upwd.value
+		xhr.send(data1)
+
+		//判断登录是否成功
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState==4&&xhr.status==200){
+				var re = JSON.parse(xhr.responseText)
+				if(re.code!=200){
+					alert(JSON.stringify(re))
+				}else{
+					re = re.msg[0]
+					p1.innerHTML = `<input type="hidden" id="uid" value="${re.uid}">`
+					user_show();
+					times_show();
+					article_show();
+					photo_show();
+				};
+			};
+		};
+	};
+</script>
+
+<!-- 显示数据 -->
+<script type="text/javascript">
+	// 基本资料	
+	function user_show(){		
+		var xhr =new XMLHttpRequest()
+		xhr.open('post','/data/users',true)
+		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+		var data1 = 'uid='+uid.value
+		xhr.send(data1)
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState==4&&xhr.status==200){
+				var re = JSON.parse(xhr.responseText).msg[0]
+				d1.innerHTML =`
+					<h3>个人资料</h3>
+					<hr>
+					<p>名&nbsp; &nbsp;称：<input type="text" name="uname" id="uname" value="${re.uname}" disabled></p>
+					<p>密&nbsp; &nbsp;码：<input type="text" name="upwd" id="upwd" value="${re.upwd}"></p>
+					<p>&nbsp;性&nbsp; &nbsp;别：
+						<input type="radio" name="sex" value="男" id="m"><label for="m">男</label>&nbsp;&nbsp;
+						<input type="radio" name="sex" value="女" id="w"><label for="w">女</label>&nbsp;&nbsp;
+						<input type="radio" name="sex" value="保密" id="n"><label for="n">保密</label>
+						&nbsp;&nbsp;&nbsp;
+					</p>
+					<p>邮&nbsp; &nbsp;箱：<input type="text" name="email" id="email" value="${re.email}" disabled></p>
+					<p>手机号：<input type="text" name="tel" id="tel" value="${re.tel}" disabled></p>
+					<p>关于我： <textarea id='aboutme'>${re.aboutme}</textarea></p>
+					<button onclick="user_data()">确认修改</button>
+					<hr>
+				`
+				if(re.sex=='男'){
+					m.checked=true
+				}else if(re.sex=='女'){
+					w.checked=true
+				}else{
+					n.checked=true
+				}
+
+			}
+		}
+	}
+	//时光轴
+	function times_show(){	
+		var xhr1 =new XMLHttpRequest()
+		xhr1.open('post','/data/times',true)
+		xhr1.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+		var data1 = 't_uid='+uid.value
+		xhr1.send(data1)
+
+		xhr1.onreadystatechange=function(){
+			if(xhr1.readyState==4&&xhr1.status==200){
+				var re1 = JSON.parse(xhr1.responseText).msg
+				d2.innerHTML='<h3>时光轴</h3><hr>'
+				if(re1.length==0){return d2.innerHTML+=`这个人很懒什么都没留下`}
+				for(var x in re1){
+					d2.innerHTML+=`
+						<input type="hidden" id="tid${re1[x].tid}" value="${re1[x].tid}">
+
+						<p align="left" id="times_p${re1[x].tid}">
+							<strong id='times_strong${re1[x].tid}'>${re1[x].content}</strong>
+						</p>
+
+						<p align="right">${re1[x].send_time.slice(0,10).replace(/-/g,'.')}&nbsp;&nbsp;&nbsp;&nbsp;
+							<span>
+								<a href='javascript:times_data(${re1[x].tid})'>修改 /</a>
+								<a href='javascript:times_delete(${re1[x].tid})'>删除</a>
+							</span>
+						</p>
+						<hr>
+					`
+				}
+			}
+		}
+	}
+	//文章	
+	function article_show(){
+		
+		var xhr2 =new XMLHttpRequest()
+		xhr2.open('post','/data/article',true)
+		xhr2.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+		var data2 = 'a_uid='+uid.value
+		xhr2.send(data2)
+
+		xhr2.onreadystatechange=function(){
+			if(xhr2.readyState==4&&xhr2.status==200){
+				console.log(xhr2.responseText)
+				var re2 = JSON.parse(xhr2.responseText).msg
+				d3.innerHTML = '<h3>文章列表</h3><hr>'
+				if(re2.length==0){return d3.innerHTML+=`这个人很懒什么都没留下`}
+				for(var x in re2){
+					d3.innerHTML+=`
+						<input type="hidden" id="aid${re2[x].aid}" value="${re2[x].aid}">
+
+						<p align="left" id="article_p${re2[x].aid}">
+							<strong id='article_strong${re2[x].aid}'>${re2[x].title}</strong>
+						</p>
+
+						<p align="right">${re2[x].send_time.slice(0,10).replace(/-/g,'.')}&nbsp;&nbsp;&nbsp;&nbsp;
+							<span>
+								<a href='javascript:article_data(${re2[x].aid})'>编辑 /</a>
+								<a href='javascript:article_delete(${re2[x].aid})'>删除</a>
+							</span>
+						</p>
+						<hr>
+					`
+				}
+			}
+		}
+	}
+	//相册
+	function photo_show(){
+		var xhr =new XMLHttpRequest()
+		xhr.open('post','/data/photo',true)
+		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+		xhr.send('p_uid='+uid.value)
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState==4&&xhr.status==200){
+				var re = JSON.parse(xhr.responseText)
+				if(re.code!=200){
+					alert(re.msg)
+				}else{
+					d4.innerHTML = '<h3>我的相册</h3><hr>'
+					if(re.msg.length==0){return d4.innerHTML+=`这个人很懒什么都没留下`}
+					for(var x in re.msg){
+						d4.innerHTML += `<img src="${re.msg[x].img_src}"><hr>`
+					}
+				}
+			}
+		}
+	}
+
+</script>
+
+<!-- 修改数据 -->
+<script type="text/javascript">
+//修改用户信息
+	function user_data(){
+		var xhr =new XMLHttpRequest()
+		xhr.open('post','/data/data_users',true)
+		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+		if(m.checked){
+			var s='男'
+		}else if(w.checked){
+			var s='女'
+		}else{
+			var s='保密'
+		}
+		var data = 'uid='+uid.value+'&upwd='+upwd.value+'&sex='+s+'&aboutme='+aboutme.value
+		xhr.send(data1)
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState==4&&xhr.status==200){
+				alert(xhr.responseText)
+				user_show();
+			}
+		}
+	}
+
+//修改时光轴
+	// 1.点击修改时，文本编程文本框可修改
+	function times_data(t){
+		var strong_id = 'times_strong'+t
+		var strong_id = document.getElementById(strong_id); 
+		var strong_data = strong_id.innerHTML
+
+		strong_id.innerHTML = `
+							<input type="text" id=times_input${t} value=${strong_data}>
+							<button onclick="times_update(${t})">确认修改</button>`
+
+	}
+	// 2.修改数据提交并还原成文本
+	function times_update(t){
+		var input_id = 'times_input'+t
+		var content = document.getElementById(input_id).value
+
+		var xhr =new XMLHttpRequest()
+		xhr.open('post','/data/data_times',true)
+		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+		var data = 'tid='+t+'&content='+content
+		xhr.send(data1)
+		xhr.onreadystatechange=function(){
+			var strong_id = 'times_strong'+t
+			var strong_data = document.getElementById(strong_id)
+			if(xhr.readyState==4&&xhr.status==200){
+				strong_data.innerHTML = content
+				alert(xhr.responseText)
+			}
+		}
+	}
+	// 3.删除数据并重新排版
+	function times_delete(t){
+		var xhr =new XMLHttpRequest()
+		xhr.open('post','/data/delete_times',true)
+		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+		xhr.send('tid='+t)
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState==4&&xhr.status==200){
+				alert(xhr.responseText)
+				times_show()
+			}
+		}
+	}
+
+//修改文章列表
+	function article_data(a){
+		var xhr =new XMLHttpRequest()
+		xhr.open('post','/data/data_article',true)
+		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+		xhr.send('aid='+a)
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState==4&&xhr.status==200){
+				alert(xhr.responseText)
+			}
+		}
+	}
+
+	//删除文章列表
+	function article_delete(a){
+		var xhr =new XMLHttpRequest()
+		xhr.open('post','/data/delete_article',true)
+		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+		xhr.send('aid='+a)
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState==4&&xhr.status==200){
+				alert(xhr.responseText)
+				article_show()
+			}
+		}
+	}
+
+//修改相册
+
+</script>
+
+<!--背景图-->
+<script>
+	var t=20;
+	bga.style.backgroundImage = `url("./img/image/${t}.jpg")`;
+	setInterval(function(){
+		bga.style.backgroundImage = `url("./img/image/${t}.jpg")`;
+		bga.style.transition='3s'
+		t++
+		if(t==223){t=1}
+	},6000)
+</script>
+
+
+
+</html>
+
+

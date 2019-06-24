@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>测试</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./css/animate.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <style>
+        .navbar{
+
+        }
+        .nav-item{position: relative;border: 1px solid blue; background: linear-gradient(33deg, #6CACFF,#8DEBFF);}
+        .nav-item>ul{
+            position: absolute;
+            /*left: 40%;*/
+            height: 0;
+            overflow: hidden;
+            transition: 1s;
+            z-index: 100;
+            border: 1px solid red;
+        }
+        .show ul{
+            width: 500px;
+            height: 72px;
+        }
+    </style>
+    <style>
+        div{
+            width: 200px;
+            height: 200px;
+        }
+        #diva{transition: 2s;}
+        #diva:hover{
+            transform: rotateY(180deg);
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div style="position: relative" id="diva">
+        <div id="d1" style="background: red;position: absolute;top: 0;">
+            正面
+        </div>
+        <div id="d2" style="background: yellow;position: absolute;top: 0;transform:rotateY(180deg);}">
+            反面
+        </div>
+    </div>
+
+
+    <div class="navbar w-75 mx-auto">
+        <ul class="navbar-nav w-100 navbar-expand-sm nav-justified">
+            <li class="nav-item"><a href="" class="nav-link">首页</a></li>
+            <li class="nav-item">
+                <a href="javascript:;" class="nav-link" >资讯</a>
+                <a href="javascript:;" class="nav-link">资讯</a>
+                <ul class="list-unstyled">
+                    <li>资讯1</li>
+                    <li>资讯2</li>
+                    <li>资讯3</li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="javascript:;"  class="nav-link" >资料</a>
+                <ul class=" list-unstyled" >
+                    <li>资料1</li>
+                    <li>资料2</li>
+                    <li>资料3</li>
+                </ul>
+            </li>
+            </li>
+            <li class="nav-item">
+                <a href="javascript:;" class="nav-link">项目</a>
+                <ul class="list-unstyled" >
+                    <li>项目1</li>
+                    <li>项目2</li>
+                    <li>项目3</li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="javascript:;" class="nav-link">课程</a>
+                <ul class="list-unstyled" >
+                    <li>课程1</li>
+                    <li>课程2</li>
+                    <li>课程3</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="carousel w-50 mx-auto" data-toggle="carousel" id="c">
+        <ul class="carousel-inner  m-0 p-0">
+            <li class="carousel-item active" ><img src="./img/banner01.jpg" class="w-100"/></li>
+            <li class="carousel-item"><img src="./img/banner02.jpg" class="w-100"/></li>
+            <li class="carousel-item"><img src="./img/banner03.jpg" class="w-100"/></li>
+        </ul>
+
+        <a href="" class="carousel-control-next">
+            <span class="carousel-control-next-icon" data-slide="next" data-target="#c"></span>
+        </a>
+        <a href="" class="carousel-control-prev" data-slide="next" data-target="#c">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <ul class="carousel-indicators">
+            <li data-slide-to="0" data-target="#c" class="active"></li>
+            <li data-slide-to="1" data-target="#c"></li>
+            <li data-slide-to="2" data-target="#c"></li>
+        </ul>
+    </div>
+    <button class="btn btn-danger" data-toggle="modal" data-target="#mo">aa</button>
+    <div class="modal" id="mo">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    aaa
+                    <span class="close" data-dismiss="modal" data-target="#mo">&times;</span>
+                </div>
+                <div class="modal-body">
+                    11
+                </div>
+                <div class="modal-footer">
+                    <button class="close" data-dismiss="modal" data-target="#mo ">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+    var a = document.querySelectorAll('.nav-item>a')
+    for(var x of a){
+        x.onclick = function(){
+            if(this.parentElement.className.indexOf('show') == -1){
+                for(var x of a){
+                    if(x.parentElement.className.indexOf('show') != -1){
+                        x.parentElement.className = x.parentElement.className.replace('show','')
+                    }
+                }
+                this.parentElement.className += ' show'
+            }else{
+                this.parentElement.className = this.parentElement.className.replace('show','')
+            }
+        }
+    }
+</script>
+</body>
+</html>

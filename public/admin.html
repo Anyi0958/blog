@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <style>
+        body:before{
+            content: '';
+            display: table;
+        }
+        #bga{
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            opacity: 0.7;
+            z-index: -1;
+        }
+        #con{
+            width: 500px;
+            margin: 0 auto;
+            margin-top: 100px;
+            border-radius:10px;
+            padding: 40px;
+            text-align: center;
+            letter-spacing: 0.3rem;
+            background: rgba(222,222,222,0.7);
+        }
+        #con p{margin-bottom: 30px;}
+
+        #cen{
+min-width:1400px;
+            background: rgba(222,222,222,0.7);
+        }
+        .nav{text-align: center}
+        .nav >li{width: 12.5%;}
+    </style>
+</head>
+<body>
+    <div id="bga"></div>
+    <div id="con" >
+        <h3>管理员</h3>
+        <hr/>
+        <br/>
+        <p><span>账&nbsp;号：</span><input type="text" name="uname"/></p>
+        <p><span>密&nbsp;码：</span><input type="password" name="upwd"/></p>
+        <hr/>
+        <button class="btn btn-success" onclick="load()">登录</button>
+    </div>
+    <div id="cen" class="container mt-5 rounded" style="display: none;">
+        <br/>
+        <h2 class="text-center">用户列表</h2>
+        <br/><br/>
+        <ul class="nav">
+            <li class="nav-item">ID</li>
+            <li class="nav-item">用户名</li>
+            <li class="nav-item">密码</li>
+            <li class="nav-item">性别</li>
+            <li class="nav-item">手机号</li>
+            <li class="nav-item">邮箱</li>
+            <li class="nav-item">创建时间</li>
+            <li>操作</li>
+        </ul>
+        <hr/>
+        <div id="nav">
+
+        </div>
+
+        <br/><br/>
+    </div>
+</body>
+
+<!--背景图-->
+<script>
+    var t=20;
+    bga.style.backgroundImage = `url("./img/image/${t}.jpg")`;
+    setInterval(function(){
+        bga.style.backgroundImage = `url("./img/image/${t}.jpg")`;
+        bga.style.transition='3s'
+        t++
+        if(t==223){t=1}
+    },6000)
+</script>
+
+<!--登录-->
+<script>
+    var p1 = document.getElementsByName('uname')[0]
+    p1.focus()
+    function load(){
+        var uname = document.getElementsByName('uname')[0].value
+        var upwd = document.getElementsByName('upwd')[0].value
+        if(uname==''){return confirm('账号你填了吗？')?alert('放屁！快滚！'):alert('认真点！')}
+        if(upwd==''){return alert('密码呢？')}
+        var xhr = new XMLHttpRequest()
+        xhr.open('post','/admin/admin',true)
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+        var data = 'uname=' + uname + '&upwd=' +upwd
+        xhr.send(data)
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState==4&&xhr.status==200){
+                var re = JSON.parse(xhr.responseText)
+                alert(re.msg)
+                if(re.code == '200'){
+                    con.style.display = 'none'
+                    cen.style.display = 'block'
+                    user()
+                }
+            }
+        }
+    }
+</script>
+
+<script>
+    function user(){
+        var xhr = new XMLHttpRequest()
+        xhr.open('post','/admin/index',true)
+        xhr.send()
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState==4&&xhr.status==200){
+                var data = JSON.parse(xhr.responseText)
+                var html=''
+                for(var x of data){
+                    var url = `./data.html?uid=${x.uid}`
+
+                    html +=`
+                        <ul class="nav">
+                            <li class="nav-item">${x.uid}</li>
+                            <li class="nav-item">${x.uname}</li>
+                            <li class="nav-item">${x.upwd}</li>
+                            <li class="nav-item">${x.sex}</li>
+                            <li class="nav-item">${x.tel}</li>
+                            <li class="nav-item">${x.email}</li>
+                            <li class="nav-item">${(x.set_time).slice(0,10)}</li>
+                            <li>
+                                <a href=${url}>博客</a>
+                                <a href="">删除</a>
+                            </li>
+                        </ul>
+                        <hr/>
+                    `
+                }
+                nav.innerHTML = html
+            }
+        }
+    }
+</script>
+</html>
