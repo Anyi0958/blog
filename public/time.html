@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>时光轴</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./css/animate.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/footer+header.js"></script>
+    <style>
+        *{box-sizing: border-box;}
+        body{background-color: #F2F2F0;
+        }
+        .list-group-item p{font-size: 1.25em;}
+        .box-show:hover{box-shadow: 5px 5px 5px 3px #aaa; border-radius:0.6rem ;transition: 1s;}
+        #nav{
+            width: 100%;
+            z-index: 999;
+            position: fixed;
+            margin: 0;
+        }
+        #nav_ul li:hover{animation: rubberBand 1s;}
+        @media (max-width: 830px) {
+            .col-0{
+                display: none !important;
+            }
+        }
+        .badge{white-space: pre-line !important;}
+
+        #top_nav{
+            width: 4%;
+            bottom:15%;
+            right: 3%;
+            position: fixed;
+        }
+        #top_nav li{cursor: pointer;}
+
+        /*加载动画*/
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 30%, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+        /*添加动画*/
+        #row{
+            animation-duration: 1s;
+            animation-fill-mode: both;
+            animation-name: fadeInLeft;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid p-0">
+    <header></header>
+
+    <div class="w-100 mb-4"><img src="./img/page_time.png" class="w-100"/></div>
+
+    <!--标题-->
+    <div class="border-bottom w-75 mx-auto mb-3">
+        <p class="m-0">
+            <span class="bg-dark px-3 py-2 text-light d-inline-block">时光轴</span>
+            <span class="text-dark d-inline-block float-right col-0 mt-2 font-weight-bold" style="font-size: 0.65rem;">时光飞逝，机会就在我们眼前，何时找到了灵感，就要把握机遇，我们需要智慧和勇气去把握机会</span>
+        </p>
+    </div>
+
+    <!--内容-->
+    <div class="w-75 mx-auto my-5" id="row">
+        <ul class="list-group m-0 mx-sm-4 flex-wrap" id="time">
+            <li class="list-group-item badge py-4 pl-4 mb-3 w-100 ">
+                <p class="text-left w-100" >人不可缺少自己的道，要有一颗“利他之心”</p>
+                <span class="badge-pill badge-danger py-1 px-3 float-right">2081-2-12</span>
+            </li>
+        </ul>
+    </div>
+
+   <footer></footer>
+</div>
+</body>
+
+<script>
+    function show(){
+        var xhr = new XMLHttpRequest();
+        xhr.open('post','/index/times',true)
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+        xhr.send('t_uid=1')
+        xhr.onreadystatechange = function(){
+            if(xhr.status==200 && xhr.readyState == 4){
+                var data = JSON.parse(xhr.responseText);
+                var html='';
+                for(var x in data){
+                    html +=`
+                        <li class="list-group-item badge py-4 pl-4 mb-3 w-100 box-show">
+                            <p class="text-left w-100" >${data[x].content}</p>
+                            <span class="badge-pill badge-danger py-1 px-3 float-right">${(data[x].send_time).slice(0,10)}</span>
+                        </li>
+                        `
+                };
+                time.innerHTML = html
+            }
+        }
+    }
+show()
+</script>
+
+
+</html>

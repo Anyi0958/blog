@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>学无止境</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./css/animate.css">
+    <link rel="stylesheet" type="text/css" href="./css/conn.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/footer+header.js"></script>
+
+</head>
+<body >
+<div class="container-fluid p-0">
+    <!--导航栏-->
+    <header></header>
+    
+    <div class="w-100 mb-4"><img src="./img/page_bg1.png" class="w-100"/></div>
+    
+    <!--标题-->
+    <div class="border-bottom w-75 mx-auto mb-3">
+        <p class="m-0">
+            <span class="bg-dark px-3 py-2 text-light d-inline-block">文章列表</span>
+            <span class="text-dark d-inline-block float-right col-0 mt-2" style="font-size: 0.8rem">不要轻易放弃。学习成长的路上，我们长路漫漫，只因学无止境。</span>
+        </p>
+    </div>
+
+    <!--主体内容-->
+    <div class="row w-75 m-auto">
+        <!--左侧-->
+        <div class="col-12 col-lg-8 px-0 px-sm-3 pr-1">
+            <ul class="list-group" id="aj_ul">
+                <li class="list-group-item mb-3">
+                    <div class="media mt-3 flex-wrap">
+                        <h4 class="col-12 mb-4">一个前端的自我修养(测试)</h4>
+                        <img src="img/toppic02.jpg" class="col-12 col-sm-4 "/>
+                        <div class="media-body col-12">
+                            <a href="javascript:a_count()">
+                                <p></p>
+                                <p>前言：还记得刚接触前端的时候，对于“前端构建工具”这个词一脸茫然。</p>
+                                <p class="badge float-right">
+                                    <span class="badge-primary badge-pill">作者</span>
+                                    <span class="badge-success badge-pill">阅读量</span>
+                                    <span class="badge-dark badge-pill">时间</span>
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!--右侧-->
+        <div class="col-00 col-lg-4 px-0 px-sm-2 pl-1 ">
+            <div class="rounded curul">
+                <ul class="list-group border mb-3">
+                    <li class="list-group-item  border-0">
+                        <h5 class="font-weight-bold d-inline-block pr-4 pb-2" style="border-bottom: 3px solid #565b5f;">特别推荐</h5>
+                    </li>
+                    <li class="list-group-item  border-0"><div><img src="img/banner03.jpg" class="w-100 rounded"/></div></li>
+                    <li class="list-group-item  border-0"><div><img src="img/b04.jpg" class="w-100 rounded"/></div></li>
+                    <li class="list-group-item  border-0"><div><img src="img/b05.jpg" class="w-100 rounded"/></div></li>
+                </ul>
+                <ul class="list-group border mb-3">
+                    <li class="list-group-item  border-0">
+                        <h5 class="font-weight-bold d-inline-block pr-4 pb-2" style="border-bottom: 3px solid #565b5f;">特别推荐</h5>
+                    </li>
+                    <li class="list-group-item  border-0"><div><img src="img/banner03.jpg" class="w-100 rounded"/></div></li>
+                    <li class="list-group-item  border-0"><div><img src="img/b04.jpg" class="w-100 rounded"/></div></li>
+                    <li class="list-group-item  border-0"><div><img src="img/b05.jpg" class="w-100 rounded"/></div></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer></footer>
+</div>
+
+
+</body>
+
+<!--获取文章-->
+<script>
+    function a_load(){
+        var xhr = new XMLHttpRequest();
+        xhr.open('post','/index/index',true);
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+        xhr.send();
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState==4 && xhr.status==200){
+                var data = JSON.parse(xhr.responseText);
+                var html = aj_ul.innerHTML
+                html=''
+                for(var x in data){
+//                    console.log(data[x]['title']);
+                    html += `
+                <li class="list-group-item mb-4 rounded box-show">
+                    <div class="media my-3 flex-wrap">
+                    <h5 class="col-12 mb-4 font-weight-bold" onclick='a_count(${data[x].aid})'>
+                    <a href="./info.html?aid=${data[x].aid}">${data[x].title}</a>
+                    </h5>
+                    <img src="img/toppic02.jpg" class="col-12 col-md-4 "/>
+                    <div class="media-body col-12">
+                    <p></p>
+                    <p class='listp'>${data[x].content}</p>
+                    <p class="badge float-right mt-xl-4 ">
+                    <span class="badge-primary badge-pill">安逸</span>
+                    <span class="badge-success badge-pill">阅读量：${data[x].read_count}</span>
+                    <span class="badge-dark badge-pill">${(data[x].send_time).slice(0,7)}</span>
+                    </p>
+                    </div>
+                    </div>
+                    </li>
+                    `
+                }
+                aj_ul.innerHTML = html
+            }
+        };
+    }
+a_load()
+</script>
+<!--文章阅读量-->
+<script>
+    function a_count(aid){
+        var xhr = new XMLHttpRequest();
+        xhr.open('post','/index/a_count',true)
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+        xhr.send('aid='+aid)
+        xhr.onreadystatechange = function(){
+            if(xhr.status==200 && xhr.readyState == 4){
+                a_load();
+            }
+        }
+    }
+</script>
+
+<!--顶部-->
+<script>
+    var backButton=$('.back_to_top');
+    function backToTop() {
+        $('html,body').animate({
+            scrollTop: 0
+        }, 800);
+    }
+    backButton.on('click', backToTop);
+
+    $(window).on('scroll', function () {/*当滚动条的垂直位置大于浏览器所能看到的页面的那部分的高度时，回到顶部按钮就显示 */
+        if ($(window).scrollTop() > $(window).height())
+            backButton.fadeIn();
+        else
+            backButton.fadeOut();
+    });
+    $(window).trigger('scroll');/*触发滚动事件，避免刷新的时候显示回到顶部按钮*/
+</script>
+
+</html>

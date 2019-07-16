@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>我的相册</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./css/animate.css">
+    <link rel="stylesheet" type="text/css" href="./css/conn.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/footer+header.js"></script>
+    <style>
+        /*加载动画*/
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translate3d(-100%, 100%, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+        /*添加动画*/
+        .fram{
+            animation-duration: 1.5s;
+            animation-fill-mode: both;
+            animation-name: fadeInLeft;
+        }
+        .row{animation: none;}
+    </style>
+</head>
+<body >
+<div class="container-fluid p-0">
+    <!--导航栏-->
+    <header></header>
+
+    <div class="w-100 mb-4"><img src="./img/page_photo.png" class="w-100"/></div>
+
+    <!--标题-->
+    <div class="border-bottom w-75 mx-auto mb-3">
+        <p class="m-0">
+            <span class="bg-dark px-3 py-2 text-light d-inline-block">我的相册</span>
+            <span class="text-dark d-inline-block float-right col-0 mt-2" style="font-size: 0.8rem">好咖啡要和朋友一起品尝，好的故事也要和人一起分享。</span>
+        </p>
+    </div>
+
+    <!--内容-->
+    <div class="row w-75 mx-auto mb-3" id="d1">
+        <!--<div class="col-6 col-sm-3 p-0">-->
+            <!--<div class="card mx-2">-->
+                <!--<div class="p-2" ><img src="img/toppic01.jpg" class="w-100 card-body" /></div>-->
+                <!--<p class="card-footer border text-center m-0">sss</p>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-6 col-sm-3 p-0">-->
+            <!--<div class="card mx-2">-->
+                <!--<div class="p-2"><img src="img/toppic02.jpg" class="w-100 card-body"/></div>-->
+                <!--<p class="card-footer border text-center m-0">sss</p>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-6 col-sm-3 p-0">-->
+            <!--<div class="card mx-2">-->
+                <!--<div class="p-2"><img src="img/banner01.jpg" class="w-100 card-body "/></div>-->
+                <!--<p class="card-footer border text-center m-0">sss</p>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-6 col-sm-3 p-0">-->
+            <!--<div class="card mx-2">-->
+                <!--<div class="p-2"><img src="img/banner02.jpg" class="w-100 card-body "/></div>-->
+                <!--<p class="card-footer border text-center m-0">sss</p>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+
+    <div class="row w-75 mx-auto mb-3" id="d2">
+        <!--<div class="col-6 col-sm-3 p-0">-->
+            <!--<div class="card mx-2">-->
+                <!--<div class="p-2"><img src="img/toppic01.jpg" class="w-100 card-body"/></div>-->
+                <!--<p class="card-footer border text-center m-0">sss</p>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-6 col-sm-3 p-0">-->
+            <!--<div class="card mx-2">-->
+                <!--<div class="p-2"><img src="img/toppic02.jpg" class="w-100 card-body"/></div>-->
+                <!--<p class="card-footer border text-center m-0">sss</p>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-6 col-sm-3 p-0">-->
+            <!--<div class="card mx-2">-->
+                <!--<div class="p-2"><img src="img/banner01.jpg" class="w-100 card-body "/></div>-->
+                <!--<p class="card-footer border text-center m-0">sss</p>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-6 col-sm-3 p-0">-->
+            <!--<div class="card mx-2">-->
+                <!--<div class="p-2"><img src="img/banner02.jpg" class="w-100 card-body "/></div>-->
+                <!--<p class="card-footer border text-center m-0">sss</p>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+
+    <!--分页-->
+    <div class="w-75 my-4 mx-auto">
+        <div>
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled"><a href="javascript:;" class="page-link"  data-page="pages" >上一页</a></li>
+                <li class="page-item active"><a href="javascript:show(1)" class="page-link" data-page="pages" data-p="1">1</a></li>
+                <li class="page-item"><a href="javascript:show(2)" class="page-link" data-page="pages" data-p="2">2</a></li>
+                <li class="page-item"><a href="javascript:show(3)" class="page-link " data-page="pages" data-p="3">3</a></li>
+                <li class="page-item"><a href="javascript:show(4)" class="page-link" data-page="pages" data-p="4">4</a></li>
+                <li class="page-item"><a href="javascript:show(5)" class="page-link" data-page="pages" data-p="5">5</a></li>
+                <li class="page-item"><a href="javascript:show(2);" class="page-link"  data-page="pages" data-p="2" >下一页</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <footer></footer>
+
+</div>
+</body>
+
+<!--页码-->
+<script>
+    var pages = document.querySelectorAll('a[data-page=pages]')
+    var prev = pages[0].parentElement.parentElement.firstElementChild
+    var next = pages[0].parentElement.parentElement.lastElementChild
+
+    for(var page of pages){
+        page.onclick = function(){
+            if(this.getAttribute('data-p')=='1'){
+                prev.className = prev.className.replace('disabled','')
+                prev.className += ' disabled'
+                next.className = next.className.replace('disabled','')
+            }else if(this.getAttribute('data-p')=='5'){
+                prev.className = prev.className.replace('disabled','')
+                next.className += ' disabled'
+            }else{
+                prev.className = prev.className.replace('disabled','')
+                next.className = next.className.replace('disabled','')
+            }
+            for(page of pages){
+                if(page.parentElement.className.indexOf('active') != -1){
+                    page.parentElement.className = page.parentElement.className.replace('active','')
+                }
+            }
+            prev.firstElementChild.href=`javascript:show(${parseInt(this.getAttribute('data-p'))-1});`
+            prev.firstElementChild.setAttribute('data-p',`${parseInt(this.getAttribute('data-p'))-1}`)
+
+            next.firstElementChild.href=`javascript:show(${parseInt(this.getAttribute('data-p'))+1});`
+            next.firstElementChild.setAttribute('data-p',`${parseInt(this.getAttribute('data-p'))+1}`)
+
+            if(this == prev.firstChild){
+                document.querySelectorAll(`a[data-p='${parseInt(this.getAttribute('data-p'))+1}']`)[0].parentElement.className += ' active'
+                next.firstElementChild.href=`javascript:show(${parseInt(this.getAttribute('data-p'))+1});`
+
+            }else if(this == next.firstChild){
+                document.querySelectorAll(`a[data-p='${this.getAttribute('data-p')-1}']`)[0].parentElement.className += ' active'
+                prev.firstElementChild.href=`javascript:show(${parseInt(this.getAttribute('data-p'))-1});`
+
+            }else{
+                document.querySelectorAll(`a[data-p='${this.getAttribute('data-p')}']`)[0].parentElement.className += ' active'
+
+            }
+        }
+    }
+
+</script>
+
+<!--相册数据加载-->
+<script>
+    function show(page){
+        var xhr = new XMLHttpRequest();
+        xhr.open('post','/index/photo',true);
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+        xhr.send(`p_uid=1&page=${page}`);
+        xhr.onreadystatechange=function(){
+            if(xhr.readyState==4&&xhr.status==200){
+                var data = JSON.parse(xhr.responseText);
+                var html1='',html2='';
+                for(var x in data){
+                    if(x<4){
+                        html1+=`
+                            <div class="col-6 col-lg-3 p-0 mb-3 fram">
+                                <div class="card mx-2 ">
+                                <div class="p-0 p-sm-2"><img src="${data[x].img_src}" class="w-100 card-body" /></div>
+                                <p class="card-footer border text-center m-0">${data[x].img_name}</p>
+                                </div>
+                            </div>
+                        `
+                    }else{
+                        html2+=`
+                            <div class="col-6 col-lg-3 p-0 fram">
+                                <div class="card mx-2">
+                                <div class="p-0 p-sm-2"><img src="${data[x].img_src}" class="w-100 card-body" /></div>
+                                <p class="card-footer border text-center m-0">${data[x].img_name}</p>
+                                </div>
+                            </div>
+                        `
+                    };
+                };
+                d1.innerHTML=html1;
+                d2.innerHTML=html2;
+            }
+        }
+    }
+show(1)
+</script>
+
+</html>

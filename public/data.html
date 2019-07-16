@@ -289,7 +289,7 @@
 			var s='保密'
 		}
 		var data = 'uid='+uid.value+'&upwd='+upwd.value+'&sex='+s+'&aboutme='+aboutme.value
-		xhr.send(data1)
+		xhr.send(data)
 		xhr.onreadystatechange=function(){
 			if(xhr.readyState==4&&xhr.status==200){
 				alert(xhr.responseText)
@@ -319,7 +319,7 @@
 		xhr.open('post','/data/data_times',true)
 		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
 		var data = 'tid='+t+'&content='+content
-		xhr.send(data1)
+		xhr.send(data)
 		xhr.onreadystatechange=function(){
 			var strong_id = 'times_strong'+t
 			var strong_data = document.getElementById(strong_id)
@@ -344,14 +344,35 @@
 	}
 
 //修改文章列表
+	// 1.点击修改时，文本编程文本框可修改
 	function article_data(a){
+		var strong_id = 'article_strong'+a
+		var strong_id = document.getElementById(strong_id); 
+		var strong_data = strong_id.innerHTML
+
+		strong_id.innerHTML = `
+							<input type="text" id=article_input${a} value=${strong_data}>
+							<button onclick="article_update(${a})">确认修改</button>`
+
+	}
+	// 2.修改数据提交并还原成文本
+	function article_update(a){
+		var input_id = 'article_input'+a
+		var content = document.getElementById(input_id).value
+
 		var xhr =new XMLHttpRequest()
 		xhr.open('post','/data/data_article',true)
 		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
-		xhr.send('aid='+a)
+		var data = 'aid='+a+'&content='+content
+		xhr.send(data)
 		xhr.onreadystatechange=function(){
+			var strong_id = 'article_strong'+a
+			var strong_data = document.getElementById(strong_id)
 			if(xhr.readyState==4&&xhr.status==200){
+				strong_data.innerHTML = content
 				alert(xhr.responseText)
+				console.log(xhr.responseText)
+
 			}
 		}
 	}

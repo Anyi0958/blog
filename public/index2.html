@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>安逸博客</title>
+	<meta charset="utf-8" name="viewport" content="width=device-width">
+	<style type="text/css">
+		*{margin: 0;padding: 0;border: none;text-decoration: none;list-style: none;}
+		body{background-color: #f2f2f0;}
+		p{color: #566573;}
+		a{color: #555;}
+		img{width: 100%;transition:all 0.7s linear;}
+		img:hover{transform:scale(1.1);}
+		.one_right div img:hover{transform:translate(0,-10px) scale(1.1);}
+		header,footer{height: 80px;box-sizing: border-box;}
+		iframe{	width: 100%;}
+		/*第一个主体内容*/
+		#content_one,#content_two{width: 70%;margin: 0 auto;}
+		/*清除高度坍塌*/
+		#content_one:after,#content_two:after{content: '';display: block;clear: both;}
+		/*轮播图部分*/
+		#content_one .one_left,#content_two .two_left{width: 66%;float:left;overflow: hidden;}
+		.one_left ul{width: 300%;animation: lunbo 10s linear 2s infinite;}
+		.one_left li{width: 33.3%;float: left;}
+		/*轮播效果*/
+		@keyframes lunbo{
+			0%{transform: translate(0px);}
+			10%{transform: translate(0px);}
+			20%{transform: translate(0px);}
+			30%{transform: translate(-33.3%);}
+			35%{transform: translate(-33.3%);}
+			45%{transform: translate(-33.3%);}
+			55%{transform: translate(-33.3%);}
+			60%{transform: translate(-66.6%);}
+			70%{transform: translate(-66.6%);}
+			80%{transform: translate(-66.6%);}
+			85%{transform: translate(-66.6%);}
+			95%{transform: translate(0px);}
+			100%{transform: translate(0px);}
+		}
+		/*轮播图右侧*/
+		#content_one .one_right,#content_two .two_right{width: 32%;height: 100%;float: right;}
+		.one_right div,.two_right div{width: 100%;overflow: hidden;}
+		/*图片浮动，解决高度坍塌*/
+		.one_right div img{float: left;}
+		.one_right div::after{content:'';display: block;clear: both;}
+		.one_right div p{width: 100%;padding: 5px 0;float: left;transform: translate(0,-29px);background-color: #000;color: #fff;text-indent: 1em;}
+
+		.two_left>div,.two_right>div{width: 100%;background-color:#fff;padding:20px 20px 30px;box-sizing: border-box;border-radius: 10px;margin-bottom: 20px;}
+		.two_left>div::after{content: '';display: block;clear: both;}
+		.two_left h1{width: 100%;font-size: 1.4em;margin:0 0 20px;}
+		.two_left .left_img{width: 40%;float: left;overflow: hidden;}
+		.two_left>div>div{width: 50%;float: left;margin-left: 4%;box-sizing: border-box;padding: 10px 0 0;}
+		.two_left .left_p>p{display: block;overflow: hidden;height: 109px;margin-top: 15px;}
+		.two_left .left_p p+p{height: 20px;margin-top: 5px;display: flex;justify-content: space-around;}
+		
+		.two_right>div>div{margin-bottom: 20px;}
+
+		@media screen and (min-width: 992px) and (max-width:1145px) {
+			.one_right div p{transform:translate(0,-22px);padding: 2px 0;}
+			.two_left .left_p>p{margin-top: 0;height: 85px;}
+		}
+		@media screen and (min-width: 768px) and (max-width:991px) {
+			p{font-size: 0.9em;}
+			.one_right div p{transform:translate(0,-17px);padding: 2px 0;}
+			.two_left .left_p>p{height: 80px;margin-top: 0;}
+		}
+		@media screen and (max-width:767px){
+			p{font-size: 0.9em;}
+			.two_left .left_p>p{margin-top: 0;height: 80px;}
+			#content_one,#content_two{width: 90%;}
+			#content_one .one_left,#content_two .two_left{width: 100%;}
+			#content_one .one_right,#content_two .two_right{display: none;}
+		}
+	</style>
+</head>
+<body onload="show()">	
+	<header>
+		<iframe src="./head.html" scrolling="no"></iframe>
+	</header>
+	<script src="./js/header.js"></script>
+	<br>
+	<section>
+		<!-- 第一部分内容 -->
+		<div id="content_one">
+			<!-- 轮播 -->
+			<div class="one_left">
+				<ul>
+					<li><a href="#"><img src="./img/banner01.jpg"></a></li>
+					<li><a href="#"><img src="./img/banner02.jpg"></a></li>
+					<li><a href="#"><img src="./img/banner03.jpg"></a></li>
+				</ul>
+			</div>
+			<!-- 右侧 -->
+			<div class="one_right">
+				<div><img src="./img/toppic01.jpg"><p>linux升级py3,安装pip,svn</p></div>
+				<div><img src="./img/toppic02.jpg"><p>Nodejs深入浅出教程</p></div>
+			</div>
+		</div>
+		<!-- 第二部分内容 -->
+		<div id="content_two">
+			<!-- 文章列表 -->
+			<div class="two_left">
+				<!-- 第一篇文章 -->
+				<div>
+					<h1><a href="#">前端监控系统之“理论篇”</a></h1>
+					<div class="left_img"><img src="./img/f.jpg" ></div>
+					<div class="left_p">
+						<p>
+							相信前端开发的朋友们，都有类似的经历。项目上线后，突然有一天收到部门Boss的反馈消息。 Boss: 咦，小张呀！你看我们网站啊，有人反馈打开有点慢、打不开啊！你看下是怎么回事？...
+						</p>
+						<p><span>作者</span><span>时间</span><span>阅读量</span></p>
+					</div>
+				</div>
+
+				<!-- 第二篇文章 -->
+				<div>
+					<h1><a href="#">前端监控系统之“理论篇”</a></h1>
+					<div class="left_img"><img src="./img/f.jpg" ></div>
+					<div class="left_p">
+						<p>
+							相信前端开发的朋友们，都有类似的经历。项目上线后，突然有一天收到部门Boss的反馈消息。 Boss: 咦，小张呀！你看我们网站啊，有人反馈打开有点慢、打不开啊！你看下是怎么回事？...
+						</p>
+						<p><span>作者</span><span>时间</span><span>阅读量</span></p>
+					</div>
+				</div>
+
+				<!-- 第三篇文章 -->
+				<div>
+					<h1><a href="#">前端监控系统之“理论篇”</a></h1>
+					<div class="left_img"><img src="./img/a.jpg" ></div>
+					<div class="left_p">
+						<p>
+							相信前端开发的朋友们，都有类似的经历。项目上线后，突然有一天收到部门Boss的反馈消息。 Boss: 咦，小张呀！你看我们网站啊，有人反馈打开有点慢、打不开啊！你看下是怎么回事？...
+						</p>
+						<p><span>作者</span><span>时间</span><span>阅读量</span></p>
+					</div>
+				</div>				
+
+				<!-- 第四篇文章 -->
+				<div>
+					<h1><a href="#">前端监控系统之“理论篇”</a></h1>
+					<div class="left_img"><img src="./img/d.jpg" ></div>
+					<div class="left_p">
+						<p>
+							相信前端开发的朋友们，都有类似的经历。项目上线后，突然有一天收到部门Boss的反馈消息。 Boss: 咦，小张呀！你看我们网站啊，有人反馈打开有点慢、打不开啊！你看下是怎么回事？...
+						</p>
+						<p><span>作者</span><span>时间</span><span>阅读量</span></p>
+					</div>
+				</div>				
+			</div>
+			<!-- 推荐文章 -->
+			<div class="two_right">
+				<div>
+					<h1>特别推荐</h1>
+					<hr style="width: 40%;height: 3px;background-color: #000;margin: 10px 0;">
+					<br>
+					<div><img src="./img/b04.jpg"></div>
+					<div><img src="./img/b05.jpg"></div>
+				</div>
+
+				<div>
+					<h1>精选文章</h1>
+					<hr style="width: 40%;height: 3px;background-color: #000;margin: 10px 0;">
+					<br>
+					<div><img src="./img/b04.jpg"></div>
+					<div><img src="./img/b05.jpg"></div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer>
+		<iframe src="./foot.html"  scrolling="no"></iframe>
+	</footer>
+
+	<script type="text/javascript">
+		function show(){
+			var xhr = new XMLHttpRequest()
+			xhr.open('get','/index/index',true)
+			xhr.send()
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState==4&&xhr.status==200){
+					alert(xhr.responseText)
+				}
+			}
+		}
+	</script>
+</body>
+</html>

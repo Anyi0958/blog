@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>安逸博客</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./css/animate.css">
+    <link rel="stylesheet" type="text/css" href="./css/conn.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/footer+header.js"></script>
+
+</head>
+<body>
+<div class="container-fluid px-0">
+    <header></header>
+
+    <div class="w-100 py-5"></div>
+
+    <!--轮播图-->
+    <div class="row w-75 mx-auto mb-4 ">
+        <!--轮播图-->
+        <div class="col-12 col-lg-8 px-0 px-sm-3 pr-1">
+            <!--图片-->
+            <div class="carousel carousel-fade" data-ride="carousel" id="lunbo">
+                <div class="carousel-inner  rounded">
+                    <div class="carousel-item active"><img src="./img/banner01.jpg" class="w-100"/></div>
+                    <div class="carousel-item"><img src="./img/banner02.jpg" class="w-100"/></div>
+                    <div class="carousel-item"><img src="./img/banner03.jpg" class="w-100"/></div>
+                </div>
+                <!--左右箭头-->
+                <a href="#lunbo" class="carousel-control-prev" data-slide="prev" data-target="#lunbo" >
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a href="#lunbo" class="carousel-control-next" data-slide="next" data-target="#lunbo">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
+                <!--下标-->
+                <ul class="carousel-indicators">
+                    <li data-slide-to="0" data-target="#lunbo"></li>
+                    <li data-slide-to="1" data-target="#lunbo"></li>
+                    <li data-slide-to="2" data-target="#lunbo"></li>
+                </ul>
+            </div>
+            
+        </div>
+        <!--右侧内容-->
+        <div class="col-00 col-lg-4 px-0 px-sm-2 pl-1 curdiv">
+            <div class=" mb-2 mb-sm-3 mb-lg-4  clearfix rounded position-relative">
+                <img src="img/toppic01.jpg" class="w-100 float-left"/>
+                <p style="position: absolute;top: 10%;left:5%;color: #fff;background-color:rgba(0,0,0,0.4);width: 15%" class="m-0 py-1 text-center">web</p>
+                <p style="position: absolute;bottom: 0;color: #fff;background-color:rgba(0,0,0,0.7);width: 100%" class="m-0 py-2 text-center">啦啦啦啦啦</p>
+            </div>
+            <div class="clearfix rounded position-relative">
+                <img src="img/toppic02.jpg" class="w-100 float-left"/>
+                <p style="position: absolute;top: 10%;left:5%;color: #fff;background-color:rgba(0,0,0,0.4);width: 15%" class="m-0 py-1 text-center">web</p>
+                <p style="position: absolute;bottom: 0;color: #fff;background-color:rgba(0,0,0,0.7);width: 100%" class="m-0 py-2 text-center">啦啦啦啦啦</p>
+            </div>
+        </div>
+    </div>
+
+    <!--主体内容-->
+    <div class="row w-75 mx-auto">
+        <!--左侧-->
+        <div class="col-12 col-lg-8 px-0 px-sm-3 pr-1">
+            <ul class="list-group" id="aj_ul">
+                <li class="list-group-item mb-3 rounded box-show">
+                    <div class="media mt-3 flex-wrap">
+                        <h4 class="col-12 mb-4" onclick="a_count()">
+                            <a href="./info.html">
+                                一个前端的自我修养(测试)
+                            </a>
+                        </h4>
+                        <img src="img/toppic02.jpg" class="col-12 col-sm-4 "/>
+                        <div class="media-body col-12">
+                                <p></p>
+                                <p>前言：还记得刚接触前端的时候，对于“前端构建工具”这个词一脸茫然。</p>
+                                <p class="badge float-right">
+                                    <span class="badge-primary badge-pill">作者</span>
+                                    <span class="badge-success badge-pill">阅读量</span>
+                                    <span class="badge-dark badge-pill">时间</span>
+                                </p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--右侧-->
+        <div class="col-00 col-lg-4 px-0 px-sm-2 pl-1 ">
+            <div class="rounded curul">
+                <ul class="list-group border mb-3">
+                    <li class="list-group-item  border-0">
+                        <h5 class="font-weight-bold d-inline-block pr-4 pb-2" style="border-bottom: 3px solid #565b5f;">特别推荐</h5>
+                    </li>
+                    <li class="list-group-item  border-0"><div><img src="img/banner03.jpg" class="w-100 rounded"/></div></li>
+                    <li class="list-group-item  border-0"><div><img src="img/b04.jpg" class="w-100 rounded"/></div></li>
+                    <li class="list-group-item  border-0"><div><img src="img/b05.jpg" class="w-100 rounded"/></div></li>
+                </ul>
+                <ul class="list-group border mb-3">
+                    <li class="list-group-item  border-0">
+                        <h5 class="font-weight-bold d-inline-block pr-4 pb-2" style="border-bottom: 3px solid #565b5f;">特别推荐</h5>
+                    </li>
+                    <li class="list-group-item  border-0"><div><img src="img/banner03.jpg" class="w-100 rounded"/></div></li>
+                    <li class="list-group-item  border-0"><div><img src="img/b04.jpg" class="w-100 rounded"/></div></li>
+                    <li class="list-group-item  border-0"><div><img src="img/b05.jpg" class="w-100 rounded"/></div></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+   <footer></footer>
+</div>
+
+<!-- 获取文章 -->
+ <script> 
+     function a_load(){ 
+         var xhr = new XMLHttpRequest(); 
+         xhr.open('post','/index/index',true); 
+         xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded') 
+         xhr.send(); 
+         xhr.onreadystatechange = function(){ 
+             if(xhr.readyState==4 && xhr.status==200){ 
+                 var data = JSON.parse(xhr.responseText); 
+                 var html = aj_ul.innerHTML 
+                 html='' 
+                 for(var x in data){ 
+ //                    console.log(data[x]['title']); 
+                     html += ` 
+                     <li class="list-group-item mb-4 rounded box-show"> 
+                         <div class="media my-3 flex-wrap"> 
+                             <h5 class="col-12 mb-4 font-weight-bold" onclick='a_count(${data[x].aid})'> 
+                                 <a href="./info.html?aid=${data[x].aid}">${data[x].title}</a> 
+                             </h5> 
+                             <img src="img/toppic02.jpg" class="col-12 col-md-4 "/> 
+                             <div class="media-body col-12"> 
+                                 <p></p> 
+                                 <p class='listp'>${data[x].content}</p> 
+                                 <p class="badge float-right mt-xl-4 "> 
+                                     <span class="badge-primary badge-pill">安逸</span> 
+                                     <span class="badge-success badge-pill">阅读量：${data[x].read_count}</span> 
+                                     <span class="badge-dark badge-pill">${(data[x].send_time).slice(0,7)}</span> 
+                                 </p> 
+                             </div> 
+                         </div> 
+                     </li> 
+                     ` 
+                 } 
+                 aj_ul.innerHTML = html 
+             } 
+         }; 
+     } a_load()
+ </script> 
+
+<!--文章阅读量-->
+<script>
+    function a_count(aid){
+        var xhr = new XMLHttpRequest();
+        xhr.open('post','/index/a_count',true)
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+        xhr.send('aid='+aid)
+        xhr.onreadystatechange = function(){
+            if(xhr.status==200 && xhr.readyState == 4){
+                a_load();
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

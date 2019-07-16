@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>留言板</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./css/animate.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/footer+header.js"></script>
+    <style>
+        *{box-sizing: border-box;text-decoration: none !important;}
+        a{color: #000;}
+        body{background-color: #F2F2F0;}
+        div{overflow: hidden;}
+        img{width: 100%;transition:all 0.7s linear;}
+        img:hover{transform:scale(1.1);}
+        #nav{
+            width: 100%;
+            z-index: 999;
+            position: fixed;
+            margin: 0;
+        }
+        #nav_ul li:hover{animation: rubberBand 1s;}
+        .box-show:hover{box-shadow: 5px 5px 5px 3px #aaa; border-radius:0.6rem ;transition: 1s;}
+        @media (max-width: 768px) {
+            .col-0{
+                display: none !important;
+            }
+        }
+        #top_nav li{cursor: pointer;}
+        .flex-wrap li{width: 98%;   }
+
+        .box {
+            width: 98%;
+            margin: 0 auto;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            overflow: hidden;
+        }
+        #str {
+            width: 100%;
+            height: 200px;
+            padding: 2em;
+            border: 0;
+            border-radius: 6px 6px 0 0;
+            outline: none;
+            background: #ffffff;
+            resize: none;
+        }
+        #top_nav{
+            width: 4%;
+            bottom:15%;
+            right: 3%;
+            position: fixed;
+        }
+        #top_nav li{cursor: pointer;}
+        /*加载动画*/
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 30%, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+        /*添加动画*/
+        #row{
+            animation-duration: 1s;
+            animation-fill-mode: both;
+            animation-name: fadeInLeft;
+        }
+    </style>
+</head>
+<body >
+<div class="container-fluid p-0">
+    <header></header>
+
+    <div class="w-100 mb-4"><img src="./img/re_bg.png" class="w-100"/></div>
+
+    <!--标题-->
+    <div class="border-bottom w-75 mx-auto mb-3">
+        <p class="m-0">
+            <span class="bg-dark px-3 py-2 text-light d-inline-block">留言列表</span>
+            <span class="text-dark d-inline-block float-right col-0 mt-2 font-weight-bold" style="font-size: 0.8rem">不要轻易放弃。学习成长的路上，我们长路漫漫，只因学无止境。</span>
+        </p>
+    </div>
+
+    <!--内容-->
+    <div class="w-75 mx-auto" id="row">
+        <ul class="list-group m-0 mx-sm-4 flex-wrap">
+            <br/>
+            <h3 style="font-size: 1rem;font-weight: 600">主人寄语：<span>欢迎光临我的博客</span></h3>
+            <hr class="border-dark w-100"/>
+
+            <div class="box ">
+                <textarea name="str" id="str"  placeholder="有什么，想对安逸这小子说的..."></textarea>
+                <button class="btn btn-success my-3 " onclick="fn()">发 表</button>
+            </div>
+
+            <div id="con" class="my-4">
+                <li class="list-group-item badge py-4 pl-4 mb-4 mx-auto box-show">
+                    <p class="text-left w-100" >写的很好，长得很帅</p>
+                    <span class="badge-pill badge-danger py-1 px-3 float-right">2081-1-10</span>
+                    <span class="badge-pill badge-success py-1 px-3 float-right">吴亦凡</span>
+
+                </li>
+
+                <li class="list-group-item badge py-4 pl-4 mb-4 mx-auto box-show">
+                    <p class="text-left w-100" >楼上说的对</p>
+                    <span class="badge-pill badge-danger py-1 px-3 float-right">2081-1-12</span>
+                    <span class="badge-pill badge-success py-1 px-3 float-right">吴亦凡</span>
+
+                </li>
+
+                <li class="list-group-item badge py-4 pl-4 mb-4 mx-auto box-show">
+                    <p class="text-left w-100" >楼上说的对</p>
+                    <span class="badge-pill badge-danger py-1 px-3 float-right">2081-2-20</span>
+                    <span class="badge-pill badge-success py-1 px-3 float-right">吴亦凡</span>
+
+                </li>
+            </div>
+        </ul>
+
+    </div>
+
+    <footer></footer>
+</div>
+</body>
+<script>
+    str.focus()
+</script>
+<!--加载数据-->
+<script>
+    function show(){
+        var xhr = new XMLHttpRequest()
+        xhr.open('post','/index/liuyan',true)
+        xhr.send()
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState==4&&xhr.status==200){
+                var data = JSON.parse(xhr.responseText)
+                var html = '';
+                for(x of data){
+                    html += `
+                        <li class="list-group-item badge py-5 pl-4 mb-4 mx-auto box-show">
+                        <p class="text-left w-100" >${x.content}</p>
+                        <span class="badge-pill badge-danger py-1 px-3 float-right">${(x.send_time).slice(0,10)}</span>
+                        <span class="badge-pill badge-success py-1 px-3 float-right">${x.user_name}</span>
+                        </li>
+                        `
+                }
+                con.innerHTML = html
+            }
+        }
+    }
+show()
+</script>
+<!--发表留言-->
+<script>
+    function fn(){
+        var data = document.getElementsByName('str')[0]
+        var xhr = new XMLHttpRequest()
+        xhr.open('post','/index/get_liuyan',true)
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+        xhr.send(`content=${data.value}`)
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState==4&&xhr.status==200){
+                alert('提交成功')
+                str.value=''
+                show()
+            }
+        }
+    }
+</script>
+</html>

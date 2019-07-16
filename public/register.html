@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>注册</title>
+	<style type="text/css">
+		img{
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    opacity: 0.6;
+		    z-index: -100;
+		}
+		a{
+			text-decoration: none;
+			color: #000;
+		}
+		a:hover{color: #fff;}
+		#d1{
+			width: 500px;
+			margin: 0 auto;
+			margin-top: 100px; 
+			padding: 10px 30px;
+
+			background-color: #fff;
+			border-radius: 15px;
+		}
+		p{
+			margin: 0;
+
+		}
+		input{
+			width: 370px;
+			height: 35px;
+			box-sizing: border-box;
+			padding-left: 15px;
+			margin-left: 20px;
+			border: 2px solid #EEEDED;
+		}
+		.sex{
+			text-align: center;
+			width: 370px;
+			height:35px;
+			margin-left: 20px;
+			border: 2px solid #EEEDED;
+			box-sizing: border-box;
+			line-height: 35px;
+		}
+		.sex input{
+			width: 20px;
+			height: 15px;
+			border: 2px solid #EEEDED;
+		}
+		.sex span{color: #757575;font-size: 14px;margin-right: 10px;}
+		span{
+			color: red;
+			font-size: 12px;
+		}
+		button{
+			width: 85px;
+			height:35px;
+			background-color: #E5E5E5;
+			border-radius: 5px;
+			padding: 0px;
+			margin-right: 50px;
+    		border: none;
+		}
+		button:hover{
+			color: #fff;
+			background-color: #000;
+			cursor:pointer;
+		}
+		/*加载动画*/
+		@keyframes fadeInLeft {
+			from {
+				opacity: 0;
+				transform: translate3d(-100%, 0, 0);
+			}
+
+			to {
+				opacity: 1;
+				transform: none;
+			}
+		}
+		/*添加动画*/
+		#d1{
+			animation-duration: 1.5s;
+			animation-fill-mode: both;
+			animation-name: fadeInLeft;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<img src="./img/c.jpg">
+	</div>
+	<div id="d1">
+
+		<h2 align="center">创建一个新账户</h2>
+
+		<hr>
+
+		<h3>新用户:</h3>
+		<p>
+			<input type="text" name="uname" placeholder="请输入用户名" id="reg_uname" onblur="fn1()" >
+			<span id="tips_uname"></span>
+		</p>
+		<br>
+		<p>
+			<input type="text" name="tel" placeholder="请输入手机号" id="reg_tel" onblur="fn5()" >
+			<span id="tips_tel"></span>
+		</p>
+		<br>
+		<p class="sex">
+			<span>请选择性别&nbsp;&nbsp;&nbsp;</span>
+			<input type="radio" name="sex" value="man"3> 
+			<label for="sex_m">男</label>
+			<span></span>		
+			<input type="radio" name="sex" value="woman">
+			<label for="sex_w">女 </label>	
+			<span></span>
+			<input type="radio" name="sex" value="default" checked>
+			<label for="sex_n">保密 </label>
+		</p>
+		<br>
+		<p>
+			<input type="text" name="email" placeholder="请输入邮箱" id="reg_email" onblur="fn2()" >
+			<span id="tips_email"></span>
+		</p>
+		<br>
+		<p>
+			<input type="password" name="upwd" placeholder="请输入密码" id="reg_upwd" onblur="fn3()">
+			<span id="tips_upwd"></span>
+		</p>
+		<br>
+		<p>
+			<input type="password" name="uppwd" placeholder="请确认密码" id="reg_uppwd" onblur="fn4()">
+			<span id="tips_uppwd"></span>
+		</p>
+
+		<br>
+
+		<p align="center" style="margin-bottom:40px; margin-top:20px ">
+			<!-- 判断是否可以登录 -->
+			<input type="hidden" id='code' value="false">
+
+			<button onclick="register()"><strong>创建并登录</strong></button>
+		</p>
+
+	</div>
+
+	<script type="text/javascript">
+		//验证用户名
+		function fn1(){
+			if(reg_uname.value == ''){
+				tips_uname.innerHTML = '*用户名称不能为空!'
+				code.value = false
+			}else{
+				var xhr =new XMLHttpRequest()
+				xhr.open('post','/user/uname',true)
+				xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+				var data='uname='+reg_uname.value
+				xhr.send(data)
+				xhr.onreadystatechange=function(){
+					if(xhr.readyState==4&&xhr.status==200){
+						if(JSON.parse(xhr.responseText).code==500){
+							alert(JSON.parse(xhr.responseText).msg)
+							code.value = false
+						}else if(JSON.parse(xhr.responseText).code==300){
+							tips_uname.innerHTML = JSON.parse(xhr.responseText).msg
+							code.value = false
+						}else{
+							tips_uname.innerHTML = ''
+							code.value = true
+						}
+					}
+				}
+			}
+			return code.value
+		}
+		//验证手机号
+		function fn5(){
+			var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+			if(reg_tel.value == ''){
+				tips_tel.innerHTML = '*手机号码不能为空!'
+				code.value = false
+			}else if(!myreg.test(reg_tel.value)){
+				tips_tel.innerHTML = '*手机号码格式错误!'
+				code.value = false
+			}else{
+				var xhr =new XMLHttpRequest()
+				xhr.open('post','/user/tel',true)
+				xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+				var data='tel='+reg_tel.value
+				xhr.send(data)
+				xhr.onreadystatechange=function(){
+					if(xhr.readyState==4&&xhr.status==200){
+						if(JSON.parse(xhr.responseText).code==500){
+							alert(JSON.parse(xhr.responseText).msg)
+							code.value = false
+						}else if(JSON.parse(xhr.responseText).code==300){
+							tips_tel.innerHTML = JSON.parse(xhr.responseText).msg
+							code.value = false
+						}else{
+							tips_tel.innerHTML = ''
+							code.value = true
+						}
+					}
+				}
+			}
+			return code.value
+		}
+		//验证邮箱
+		function fn2(){
+			var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+			if(reg_email.value == ''){
+				tips_email.innerHTML = '*邮箱不能为空!'
+				code.value = false
+			}else if(!reg.test(reg_email.value)){
+				code.value = false
+				tips_email.innerHTML = '*邮箱格式不正确!'
+			}
+			else{
+				tips_email.innerHTML = ''
+				code.value = true
+			}
+
+			return code.value
+		}
+		//验证密码
+		function fn3(){
+			if(reg_upwd.value == ''){
+				tips_upwd.innerHTML = '*密码不能为空!'
+				code.value = false
+			}else{
+				tips_upwd.innerHTML = ''
+				code.value = true
+			}
+			return code.value
+		}
+		//确认密码
+		function fn4(){
+			if(reg_uppwd.value != reg_upwd.value){
+				tips_uppwd.innerHTML = '*密码不一致!'
+				code.value = false
+			}else{
+				tips_uppwd.innerHTML = ''
+				code.value = true
+			}
+			return code.value
+		}
+		//登录再次验证
+		function register(){
+			//判断资料是否填写完整
+			var b =[fn1(),fn2(),fn3(),fn4(),fn5()];
+			for(var c in b){
+				if(b[c]=='false'){
+					return
+				}
+			}
+			var xhr =new XMLHttpRequest()
+			var sex = document.getElementsByName('sex')
+			for(x in sex){
+				if(sex[x].checked == true){
+					sex = sex[x].value
+					break
+				}
+			}
+			console.log(sex)
+			xhr.open('post','/user/register',true)
+			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+			var data='uname='+reg_uname.value+'&email='+reg_email.value+'&sex='+sex+'&upwd='+reg_upwd.value+'&tel='+reg_tel.value
+			xhr.send(data)
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState==4 && xhr.status==200){
+					alert(xhr.responseText)
+					if(JSON.parse(xhr.responseText).code==200){
+						location.href = '/index.html'
+					}
+				}
+			}
+		}register()
+	</script>
+
+</body>
+</html>    
